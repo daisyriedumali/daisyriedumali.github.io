@@ -1,0 +1,253 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* app styles starts here */
+body {
+	background-color: #212C3B;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	padding: 40px;
+	position: relative;
+}
+
+.news-list > li {
+	background-color: #fff;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	min-height: 180px;
+}
+
+.news-list .news-item {
+	display: flex;
+	flex-direction: row;
+}
+
+.news-list li .comments {
+	background-color: #fdfdfd;
+	border-top: 1px solid #ececec;
+	padding: 30px;
+}
+
+.news-list li .comments li {
+	padding-bottom: 20px;
+	border-bottom: 1px dashed #ddd;
+	margin-bottom: 20px;
+}
+
+.news-list li .comments li > form {
+	display: flex;
+	flex-direction: column;
+}
+
+.news-list li .comments li > form input {
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.news-list li .comments li > form textarea {
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.news-list li .comments li strong {
+	font-weight: bold;
+}
+
+.news-list li .comments li:last-child {
+	padding-bottom: 0;
+	border-bottom: 0;
+	margin-bottom: 0;
+}
+
+.news-list li .content {
+	width: 100%;
+	padding: 30px;
+}
+
+.news-list li footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.news-list li footer button:hover {
+	cursor: pointer;
+}
+
+.news-list > li .votes {
+	display: flex;
+	flex-direction: column;
+	width: 60px;
+}
+
+.news-list li .votes {
+	/*display: none;*/
+}
+
+.news-list li .votes .up, .news-list li .votes .down {
+	display: flex;
+	justify-content: center;
+	background-color: #0d1825;
+}
+
+.news-list li .votes .up span {
+	width: 0; 
+  	height: 0; 
+  	border-left: 10px solid transparent;
+  	border-right: 10px solid transparent;
+  	border-bottom: 10px solid #657b94;
+}
+
+.news-list li .votes .down span {
+	width: 0; 
+  	height: 0; 
+  	border-left: 10px solid transparent;
+  	border-right: 10px solid transparent;
+  	border-top: 10px solid #657b94;
+}
+
+.news-list li .votes button, .news-list li .votes p {
+	background-color: #151f2b;
+	border: none;
+	width: 60px;
+	flex-grow: 1;
+	flex-basis: 0;
+}
+
+.news-list li .votes button:hover {
+	cursor: pointer;
+}
+
+.news-list li .votes p {
+	color: #9ca5b1;
+	font-size: 21px;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	align-items: center;
+}
+
+.news-list .placeholder {
+	background: none;
+	border: 2px dashed #414d5f;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 120px;
+}
+
+.news-list .placeholder:hover {
+	cursor: pointer;
+}
+
+.news-list .placeholder strong {
+	color: #637184;
+	font-size: 18px;
+	text-transform: uppercase;
+}
+
+.news-list li h2 {
+	font-family: 'Lato', sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 30px;
+	margin-bottom: 15px;
+}
+
+.news-list li p {
+	color: #444;
+	line-height: 24px;
+	margin-bottom: 10px;
+}
+
+.news-list li .news-submitter {
+	color: #8c8c8c;
+	font-size: 11px;
+	margin-bottom: 0;
+	text-transform: uppercase;
+}
+
+.news-list li .news-submitter strong {
+	font-weight: bold;
+	font-family: 'Roboto', sans-serif;
+}
+
+.add-news {
+	background-color: #fff;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+	border-top: 1px solid #aaa;
+
+}
+
+.add-news form {
+	display: flex;
+	flex-direction: column;
+}
+
+.add-news form input[type=text] {
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+.add-news form textarea {
+	border: 1px solid #ddd;
+	margin-bottom: 10px;
+	padding: 10px;
+}
