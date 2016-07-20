@@ -42,6 +42,7 @@
 					var _this = this;
 					FB.api('/me', function(response) {
 						_this.setState({
+							isLogin: true,
 							userData: response
 						});
 						console.log('Successful login for: ' + response);
