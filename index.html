@@ -27,7 +27,15 @@
 
 	<script type="text/babel">
 
-		window.onload = function () {
+			var MainMiner = React.createClass({
+				render: function(){
+					return(
+						<div>
+							MainMiner;
+						</div>
+					)
+				}
+			});
 
 			var TeembrNicheMiner = React.createClass({
 				getInitialState: function(){
@@ -103,19 +111,22 @@
 
 				render: function(){
 					var msg = <a href="#" onClick={this.handleClick}>Login Here</a>;
+					var mainMiner;
 					if(this.state.isLogin){
 						msg = "Login as: "+this.state.userData.name;
+						mainMiner = <MainMiner />;
 					}
 					return (
 						<div>	
 							<p>{msg}</p>
+							{mainMiner}
 						</div>
 					);
 				}
 			});
 
 			ReactDOM.render(<TeembrNicheMiner />, document.getElementById('react-mount'));
-		}
+		
 	</script>
 </body>
 </html>
