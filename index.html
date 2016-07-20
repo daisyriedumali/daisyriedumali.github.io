@@ -39,8 +39,9 @@
 
 				testAPI: function() {
 					console.log('Welcome!  Fetching your information.... ');
+					var _this = this;
 					FB.api('/me', function(response) {
-						this.setState({
+						_this.setState({
 							userData: response
 						});
 						console.log('Successful login for: ' + response);
