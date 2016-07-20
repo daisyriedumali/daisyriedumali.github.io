@@ -30,8 +30,10 @@
 		window.onload = function () {
 
 			var TeembrNicheMiner = React.createClass({
-				componentDidMount: function() {
+				componentWillMount: function() {
 				  window.fbAsyncInit = function() {
+				  	console.log('fbAsyncInit');
+
 				    FB.init({
 				      appId      : '918073504986494',
 				      cookie     : true,  // enable cookies to allow the server to access
@@ -54,6 +56,7 @@
 				    FB.getLoginStatus(function(response) {
 				      this.statusChangeCallback(response);
 				    }.bind(this));
+				    
 				  }.bind(this);
 
 				  // Load the SDK asynchronously
