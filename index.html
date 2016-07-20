@@ -6,7 +6,7 @@
 	<script src="js/react.js"></script>
 	<script src="js/react-dom.js"></script>
 	<script src="js/browser.min.js"></script>
-	
+	<script src="js/constants.js"></script>
 </head>
 <body>
 
@@ -26,107 +26,272 @@
 	</section>
 
 	<script type="text/babel">
-
-			var MainMiner = React.createClass({
-				render: function(){
-					return(
-						<div>
-							MainMiner;
-						</div>
-					)
+		var FacebookTab = React.createClass({
+			getInitialState: function(){
+				return {
+					mainUrl: "https://www.facebook.com/search/str/",
+					shirtWebsites: SHIRTWEBSITES,
+					timePosted: FBTIME,
+					postType: POSTTYPE
 				}
-			});
+			},
 
-			var TeembrNicheMiner = React.createClass({
-				getInitialState: function(){
-					return {
-						isLogin: false,
-						userData: {}
-					}
-				},
+			getShirtWebsites: function(){
+				return this.state.shirtWebsites.map(function(site, index){
+					return <option key={index} value={site.url}>{site.name}</option>;
+				})
+			},
 
-				testAPI: function() {
-					console.log('Welcome!  Fetching your information.... ');
-					var _this = this;
-					FB.api('/me', function(response) {
-						_this.setState({
-							isLogin: true,
-							userData: response
-						});
-						console.log('Successful login for: ' + response);
-						// document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+			getTimePosted: function(){
+				return this.state.timePosted.map(function(time, index){
+					return <option key={index} value={time.stringVal}>{time.time}</option>;
+				})
+			},
+
+			getPostType: function(){
+				return this.state.postType.map(function(post, index){
+					return <option key={index} value={post.stringVal}>{post.post}</option>
+				});
+			},
+
+			startMining: function(e){
+				e.preventDefault();
+				console.log(this.refs.shirtwebsite.value);
+
+				var url = this.state.mainUrl;
+				
+				var shirtWebsites = this.refs.shirtwebsite.value;
+				if(shirtWebsites != "")
+					url += shirtWebsites;
+
+				if(shirtWebsites == "" && this.props.keywords != "")
+					url += '"'+this.props.keywords+'"';
+				else if(this.props.keywords != "")
+					url += '+"'+this.props.keywords+'"';
+
+				url += "/stories-keyword";
+
+				url += this.refs.timeposted.value;
+
+				url += this.refs.posttype.value;
+
+				console.log(url);
+
+				window.open(url);
+			},
+
+			render: function(){
+				var shirtWebsites = this.getShirtWebsites();
+				var timePosted = this.getTimePosted();
+				var postType = this.getPostType();
+
+				return (
+					<div>
+						<h4>Facebook Tab</h4>
+
+						<label>Website: </label>
+						<select ref="shirtwebsite">
+							{shirtWebsites}
+						</select>
+						
+						<br />
+
+						<label>Time Posted: </label>
+						<select ref="timeposted">
+							{timePosted}
+						</select>
+						
+						<br />
+						
+						<label>Post Type: </label>
+						<select ref="posttype">
+							{postType}
+						</select>
+
+						<br />
+
+						<button onClick={this.startMining}>Start Mining</button>
+					</div>
+				)
+			}
+		});
+
+		var PinterestTab = React.createClass({
+			render: function(){
+				return (
+					<div>
+						<h4>Pinterest Tab</h4>
+					</div>
+				)
+			}
+		});
+
+		var GoogleTab = React.createClass({
+			render: function(){
+				return (
+					<div>
+						<h4>Google Tab</h4>
+					</div>
+				)
+			}
+		});
+
+		var SocialMediaTabs = React.createClass({
+			onChangeTab: function(key, e){
+				e.preventDefault();
+				console.log(key);
+				this.props.onChangeTab(key);
+			},
+
+			render: function(){
+				return (
+					<nav>
+						<a href="#" onClick={this.onChangeTab.bind(null, 'facebook')}>Facebook</a>
+						<a href="#" onClick={this.onChangeTab.bind(null, 'pinterest')}>Pinterest</a>
+						<a href="#" onClick={this.onChangeTab.bind(null, 'google')}>Google</a>
+					</nav>
+				);
+			}
+		});
+
+		var MainMiner = React.createClass({
+			getInitialState: function(){
+				return {
+					currentTab: 'facebook',
+					keywords: ''
+				}
+			},
+
+			tabMapper: function(){
+				if(this.state.currentTab == 'facebook')
+					return <FacebookTab keywords={this.state.keywords} />
+				else if(this.state.currentTab == 'pinterest')
+					return <PinterestTab keywords={this.state.keywords} />
+				else if(this.state.currentTab == 'google')
+					return <GoogleTab keywords={this.state.keywords} />
+			},
+
+			onChangeKeyword: function(e){
+				this.setState({
+					keywords: e.target.value
+				});
+			},
+
+			onChangeTab: function(tabname){
+				if(this.state.currentTab != tabname){
+					this.setState({
+						currentTab: tabname
 					});
-				},
-
-				statusChangeCallback: function(response) {
-					console.log('statusChangeCallback');
-					console.log(response);
-					if (response.status === 'connected') {
-						this.testAPI();
-					} else if (response.status === 'not_authorized') {
-						// The person is logged into Facebook, but not your app.
-						//document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
-					} else {
-						// The person is not logged into Facebook, so we're not sure if
-						// they are logged into this app or not.
-						// document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
-					}
-				},
-
-				checkLoginState: function() {
-				  	FB.getLoginStatus(function(response) {
-				    	this.statusChangeCallback(response);
-				  	}.bind(this));
-				},
-
-				handleClick: function() {
-				  FB.login(this.checkLoginState());
-				},
-
-				componentWillMount: function() {
-				  	window.fbAsyncInit = function() {
-					  	console.log('fbAsyncInit');
-
-					    FB.init({
-							appId      : '918073504986494',
-							cookie     : true,
-							xfbml      : true,
-							version    : 'v2.1'
-					    });
-
-					    FB.getLoginStatus(function(response) {
-					      	this.statusChangeCallback(response);
-					    }.bind(this));
-
-				  	}.bind(this);
-
-					(function(d, s, id) {
-						var js, fjs = d.getElementsByTagName(s)[0];
-						if (d.getElementById(id)) return;
-						js = d.createElement(s); js.id = id;
-						js.src = "//connect.facebook.net/en_US/sdk.js";
-						fjs.parentNode.insertBefore(js, fjs);
-					}(document, 'script', 'facebook-jssdk'));
-				},
-
-				render: function(){
-					var msg = <a href="#" onClick={this.handleClick}>Login Here</a>;
-					var mainMiner;
-					if(this.state.isLogin){
-						msg = "Login as: "+this.state.userData.name;
-						mainMiner = <MainMiner />;
-					}
-					return (
-						<div>	
-							<p>{msg}</p>
-							{mainMiner}
-						</div>
-					);
 				}
-			});
+			},
 
-			ReactDOM.render(<TeembrNicheMiner />, document.getElementById('react-mount'));
-		
+			render: function(){
+				var tab = this.tabMapper();
+
+				return(
+					<div>
+						<h3>WELCOME TO TEEMBR NICHE MINER!</h3>
+						
+						<label>Keywords: </label>
+						<input type="text" onChange={this.onChangeKeyword} name="keywords" placeholder="Keywords" value={this.state.keywords}/>
+
+						<SocialMediaTabs onChangeTab={this.onChangeTab}/>
+
+						{tab}
+					</div>
+				)
+			}
+		});
+
+		var TeembrNicheMiner = React.createClass({
+			getInitialState: function(){
+				return {
+					isLogin: false,
+					userData: {}
+				}
+			},
+
+			testAPI: function() {
+				console.log('Welcome!  Fetching your information.... ');
+				var _this = this;
+				FB.api('/me', function(response) {
+					_this.setState({
+						isLogin: true,
+						userData: response
+					});
+					console.log('Successful login for: ' + response);
+					// document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+				});
+			},
+
+			statusChangeCallback: function(response) {
+				console.log('statusChangeCallback');
+				console.log(response);
+				if (response.status === 'connected') {
+					this.testAPI();
+				} else if (response.status === 'not_authorized') {
+					// The person is logged into Facebook, but not your app.
+					//document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+				} else {
+					// The person is not logged into Facebook, so we're not sure if
+					// they are logged into this app or not.
+					// document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
+				}
+			},
+
+			checkLoginState: function() {
+			  	FB.getLoginStatus(function(response) {
+			    	this.statusChangeCallback(response);
+			  	}.bind(this));
+			},
+
+			handleClick: function() {
+			  FB.login(this.checkLoginState());
+			},
+
+			componentWillMount: function() {
+			  	window.fbAsyncInit = function() {
+				  	console.log('fbAsyncInit');
+
+				    FB.init({
+						appId      : '918073504986494',
+						cookie     : true,
+						xfbml      : true,
+						version    : 'v2.1'
+				    });
+
+				    FB.getLoginStatus(function(response) {
+				      	this.statusChangeCallback(response);
+				    }.bind(this));
+
+			  	}.bind(this);
+
+				(function(d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) return;
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			},
+
+			render: function(){
+				var msg = <a href="#" onClick={this.handleClick}>Login Here</a>;
+				var mainMiner;
+				if(this.state.isLogin){
+					msg = "Login as: "+this.state.userData.name;
+					mainMiner = <MainMiner />;
+				}
+				return (
+					<div>	
+						<p>{msg}</p>
+						{mainMiner}
+					</div>
+				);
+			}
+		});
+
+		ReactDOM.render(<MainMiner />, document.getElementById('react-mount'));
 	</script>
 </body>
 </html>
