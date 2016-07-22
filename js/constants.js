@@ -18,6 +18,58 @@ var SHIRTWEBSITES = [
 						{
 							name: "Sunfrog Shirt",
 							url: "sunfrogshirts.com"
+						},
+						{
+							name: "Teelily",
+							url: "teelily.com"
+						},
+						{
+							name: "Viral Style",
+							url: "viralstyle.com"
+						},
+						{
+							name: "Canvus",
+							url: "canvus.com"
+						},
+						{
+							name: "Represent",
+							url: "represent.com"
+						},
+						{
+							name: "Threadfully",
+							url: "threadfully.com"
+						},
+						{
+							name: "Thread Me Up",
+							url: "threadmeup.com"
+						},
+						{
+							name: "Tee Blaster",
+							url: "teeblaster.com"
+						},
+						{
+							name: "Ink to the People",
+							url: "inktothepeople.com"
+						},
+						{
+							name: "Red Bubble",
+							url: "redbubble.com"
+						},
+						{
+							name: "Zazzle",
+							url: "zazzle.com"
+						},
+						{
+							name: "Cafe Press",
+							url: "cafepress.com"
+						},
+						{
+							name: "Gear Bubble",
+							url: "gearbubble.com"
+						},
+						{
+							name: "TFund",
+							url: "tfund.com"
 						}
 					];
 

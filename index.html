@@ -60,7 +60,7 @@
 
 				var url = this.state.mainUrl;
 				
-				var shirtWebsites = this.refs.shirtwebsite.value;
+				var shirtWebsites = (this.refs.othersite.value != "") ? this.refs.othersite.value : this.refs.shirtwebsite.value;
 				if(shirtWebsites != "")
 					url += shirtWebsites;
 
@@ -77,7 +77,7 @@
 
 				console.log(url);
 
-				window.open(url);
+				// window.open(url);
 			},
 
 			render: function(){
@@ -96,6 +96,11 @@
 						
 						<br />
 
+						<label>Or use other site: </label>
+						<input type="text" ref="othersite" />
+
+						<br />
+
 						<label>Time Posted: </label>
 						<select ref="timeposted">
 							{timePosted}
@@ -110,7 +115,7 @@
 
 						<br />
 
-						<button onClick={this.startMining}>Start Mining</button>
+						<button onClick={this.startMining}>Start Searching!</button>
 					</div>
 				)
 			}
