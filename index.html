@@ -75,9 +75,9 @@
 
 				url += this.refs.posttype.value;
 
-				console.log(url);
+				// console.log(url);
 
-				// window.open(url);
+				window.open(url);
 			},
 
 			render: function(){
@@ -122,20 +122,143 @@
 		});
 
 		var PinterestTab = React.createClass({
+			getInitialState: function(){
+				return {
+					shirtWebsite: SHIRTWEBSITES
+				}
+			},
+
+			getGooglePinterestKeywordSource: function(){
+				return this.state.shirtWebsite.map(function(site, index){
+					return <option key={index}
+								   value={"https://www.google.com/search?&q=site:pinterest.com+intext:from "+site.url}>{site.name}</option>
+				});
+			},
+
+			getPinterestSource: function(){
+				return this.state.shirtWebsite.map(function(site, index){
+					return <option key={index}
+								   value={"https://www.pinterest.com/source/"+site.url}>{site.name}</option>
+				});
+			},
+
+			searchUrl: function(url){
+				// console.log(url);
+
+				window.open(url);
+			},
+
+			startMining: function(key, e){
+				if (key == 'gpks'){
+					var url = this.refs.shirtwebsite_gpks.value + ' "'+this.props.keywords+'"';
+					this.searchUrl(url);
+				}
+				else if (key == 'ps'){
+					var url = this.refs.shirtwebsite_ps.value;
+					this.searchUrl(url);
+				}
+				else if(key == 'p'){
+					var url = "https://www.pinterest.com/search/pins/?q="+this.props.keywords;
+					this.searchUrl(url);	
+				}
+			},
+
 			render: function(){
+				var optionsGPKS = this.getGooglePinterestKeywordSource();
+				var optionsPS = this.getPinterestSource();
 				return (
 					<div>
 						<h4>Pinterest Tab</h4>
+						<div>
+							<label>Direct search to Pinterest </label>
+							<button onClick={this.startMining.bind(null, 'p')}>Search Pinterest Now</button>
+						</div>
+						<div>
+							<label>Google/Pinterest Keyword + Source: </label>
+							<select ref="shirtwebsite_gpks">
+								{optionsGPKS}
+							</select>
+							<button onClick={this.startMining.bind(null, 'gpks')}>Search Now</button>
+						</div>
+						<div>
+							<label>Search Pinterest + Source: </label>
+							<select ref="shirtwebsite_ps">
+								{optionsPS}
+							</select>
+							<button onClick={this.startMining.bind(null, 'ps')}>Search Now</button>
+						</div>
 					</div>
 				)
 			}
 		});
 
 		var GoogleTab = React.createClass({
+			getInitialState: function(){
+				return {
+					fpl_radio: 'allintext',
+					fpl_type: '/permalink.php',
+					shirtWebsites: SHIRTWEBSITES
+				}
+			},
+
+			getShirtWebsites: function(){
+				return this.state.shirtWebsites.map(function(site, index){
+					return <option key={index} value={site.url}>{site.name}</option>
+				});
+			},
+
+			changeFPLPP: function(e){
+				this.setState({
+					fpl_type: e.target.value
+				});
+			},
+
+			changeFPLTU: function(e){
+				this.setState({
+					fpl_radio: e.target.value
+				});
+			},
+
+			startMining: function(key, e){
+				var url;
+				if(key == 1)
+					url = "https://www.google.com/search?&q="+this.state.fpl_radio+":"+this.refs.shirtwebsite.value+" "+this.props.keywords+" site:facebook.com"+this.state.fpl_type;
+				else
+					url = "https://www.google.com/search?&q=allintext:"+this.props.keywords+" site:"+this.refs.shirtwebsite.value;
+				
+				//console.log(url);
+
+				window.open(url);
+			},
+
 			render: function(){
+				var shirtWebsites = this.getShirtWebsites();
 				return (
 					<div>
 						<h4>Google Tab</h4>
+						<div>
+							<div>
+								<label>Facebook Posts and Links: </label>
+								<div>
+									<label>Text or URL</label>
+									<input type="radio" name="fpl_radio" ref="fpl_radio" value="allintext" defaultChecked={true} onChange={this.changeFPLTU}></input>
+									<input type="radio" name="fpl_radio" ref="fpl_radio" value="allinurl" onChange={this.changeFPLTU}></input>
+								</div>
+								<div>
+									<label>Permalink or Pages</label>
+									<input type="radio" name="fpl_type" ref="fpl_type" value="/permalink.php" defaultChecked={true} onChange={this.changeFPLPP}></input>
+									<input type="radio" name="fpl_type" ref="fpl_type" value="/pages" onChange={this.changeFPLPP}></input>
+								</div>
+							</div>
+							<div>
+								<label>Search Sites: </label>
+								<select ref="shirtwebsite">
+									{shirtWebsites}
+								</select>
+							</div>
+							<button onClick={this.startMining.bind(null, 1)}>Start searching</button>
+							<button onClick={this.startMining.bind(null, 2)}>Search for sites only</button>
+						</div>
 					</div>
 				)
 			}

@@ -70,6 +70,10 @@ var SHIRTWEBSITES = [
 						{
 							name: "TFund",
 							url: "tfund.com"
+						},
+						{
+							name: "Just Pay Shipping",
+							url: "Just Pay Shipping"
 						}
 					];
 
