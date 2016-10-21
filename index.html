@@ -388,6 +388,8 @@
 						version    : 'v2.1'
 				    });
 
+				    FB.AppEvents.logPageView();
+				    
 				    FB.getLoginStatus(function(response) {
 				      	this.statusChangeCallback(response);
 				    }.bind(this));
